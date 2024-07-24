@@ -63,12 +63,10 @@ app.get("/read/:id", (req, res) => {
 });
 // UPDATE the existing student
 app.put("/edit_user/:id", (req, res) => {
-    const sql =
-        "UPDATE students SET `first_name` = ?, `last_name` = ?, `email` = ?, `location` = ?, `dob` = ?, `education` = ?, `about`= ? WHERE id = ?";
+    const sql = "UPDATE students SET `first_name` = ?, `last_name` = ?, `email` = ?, `location` = ?, `dob` = ?, `education` = ?, `about`= ? WHERE id = ?";
     const id = req.params.id;
     console.log(id)
-    const { first_name, last_name, location, email, dob, education, about } =
-        req.body;
+    const { first_name, last_name, location, email, dob, education, about } = req.body;
     db.query(
         sql,
         [first_name, last_name, email, location, dob, education, about, id],
@@ -84,7 +82,7 @@ app.put("/edit_user/:id", (req, res) => {
 });
 // DELETE the student
 app.delete("/delete/:id", (req, res) => {
-    const sql = "DELETE FROM students WHERE student_id =?";
+    const sql = "DELETE FROM students WHERE id =?";
     const id = req.params.id;
     db.query(sql, [id], (err, result) => {
         if (err) {

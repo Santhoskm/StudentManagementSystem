@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
-import Edit from './Edit';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 function Home() {
     const [data, setData] = useState([]);
-    const [deleted, setDeleted] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [selectedStudentId, setSelectedStudentId] = useState(null);
 
     async function fetchRecords() {
         try {
@@ -30,24 +31,41 @@ function Home() {
         updateData();
     }, [data]);
 
-    useEffect(() => {
-        if (deleted) {
-            setDeleted(false);
-            axios.get('/students')
-                .then((res) => {
-                    setData(Array.isArray(res.data) ? res.data : []);
-                })
-                .catch((err) => console.log(err));
-        }
-    }, [deleted]);
-
-    function handleDelete(id) {
-        axios.delete(`/delete/${id}`)
-            .then((res) => {
-                setDeleted(true);
-            })
-            .catch((err) => console.log(err));
+    // Handle delete button click
+    const handleDelete = (id) => {
+        setSelectedStudentId(id);
+        setOpen(true);
     }
+
+    // Confirm delete action
+    const confirmDelete = () => {
+        if (selectedStudentId) {
+            axios.delete(`http://localhost:5000/delete/${selectedStudentId}`)
+                .then(() => {
+                    updateData(); // Refresh data after deletion
+                    handleClose(); // Close the dialog
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        console.log(
+                            "Server responded with status code:",
+                            err.response.status
+                        );
+                    } else if (err.request) {
+                        console.log("No response received from server");
+                    } else {
+                        console.log("Error:", err.message);
+                    }
+                });
+        }
+
+        setOpen(false);
+    }
+    // Handle dialog close
+    const handleClose = () => {
+        setOpen(false);
+    };
+
 
     return (
         <div className="container">
@@ -105,7 +123,7 @@ function Home() {
                             <td className="text-center">
                                 <a href={"mailto:" + student.email}>{student.email}</a>
                             </td>
-                            <td className="text-center">{student.DOB}</td>
+                            <td className="text-center">{student.dob}</td>
                             <td className="text-center">{student.education}</td>
                             <td>
                                 <Link className='text-center' to={`/edit/${student.ID}`} >Edit</Link>
@@ -121,6 +139,30 @@ function Home() {
                     )}
                 </tbody>
             </table>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this record?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        color="primary"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={confirmDelete}
+                        color="secondary"
+                    >
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+
         </div>
     );
 }
