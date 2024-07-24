@@ -4,6 +4,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import Read from './Read';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -70,31 +71,11 @@ function Home() {
     return (
         <div className="container">
             <h3>Student Management System</h3>
-            <div className="container mt-4 d-flex justify-content-between align-items-center" style={{ marginBottom: "20px" }}>
-                <InputGroup className="me-3" style={{ width: "20%" }} >
-                    <Form.Control
-                        type="text"
-                        placeholder="Search"
-                        style={{
-                            borderRadius: "5px",
-                            backgroundColor: "#F0F0F0",
-                            borderColor: "#F0F0F0",
-                        }}
-                    />
-                    <InputGroup.Text
-                        style={{
-                            backgroundColor: "#F0F0F0",
-                            borderColor: "#F0F0F0",
-                        }}
-                    >
-                        <FaSearch />
-                    </InputGroup.Text>
-                </InputGroup>
-                <div className='d-flex justify-content-end'>
-                    <Link className='btn btn-dark' to='/create'>Add</Link>
-                </div>
+            <div >
+                <Read />
             </div>
-            <table className="container-fluid">
+
+            <table className="container-fluid ">
                 <thead>
                     <tr>
                         <th className="py-10 px-2">ID</th>

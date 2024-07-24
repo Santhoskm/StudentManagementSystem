@@ -1,58 +1,61 @@
-//import React, { useState, useEffect } from "react";
-// import { Link, useParams } from "react-router-dom";
-// import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { TextField, InputAdornment, Button } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FaExchangeAlt } from "react-icons/fa";
 
-// function Read() {
-//   const [data, setData] = useState([]);
-//   const { id } = useParams();
-//   useEffect(() => {
-//     axios
-//       .get(`/get_student/${id}`)
-//       .then((res) => {
-//         setData(res.data);
-//       })
-//       .catch((err) => console.log(err));
-//   }, [id]);
-//   return (
-//     <div className="container-fluid vw-100 vh-100 bg-primary">
-//       <h1>User {id}</h1>
-//       <Link to="/" className="btn btn-success">Back</Link>
-//       {data.map((student) => {
-//         return (
-//           <ul className="list-group">
-//             <li className="list-group-item">
-//               <b>ID: </b>
-//               {student["id"]}
-//             </li>
-//             <li className="list-group-item">
-//               <b>FirstName: </b>
-//               {student["firstname"]}
-//             </li>
-//             <li className="list-group-item">
-//               <b>LastName: </b>
-//               {student["lastname"]}
-//             </li>
-//             <li className="list-group-item">
-//               <b>Location: </b>
-//               {student["Location"]}
-//             </li>
-//             <li className="list-group-item">
-//               <b>Email: </b>
-//               {student["Email"]}
-//             </li>
-//             <li className="list-group-item">
-//               <b>DOB: </b>
-//               {student["DOB"]}
-//             </li>
-//             <li className="list-group-item">
-//               <b>Education: </b>
-//               {student["Education"]}
-//             </li>
-//           </ul>
-//         );
-//       })}
-//     </div>
-//   );
-// }
+const Read = () => {
+    const navigate = useNavigate();
 
-//export default Read;
+    const handleAddClick = () => {
+        navigate("/create");
+    };
+
+    return (
+        <div className="container mt-4 d-flex justify-content-between align-items-center" style={{ marginBottom: "20px" }}>
+            < TextField
+                variant="outlined"
+                placeholder="Search"
+                style={{
+                    paddingLeft: "10px",
+                    width: "27%",
+                    height: "18%",
+                    borderRadius: "5px",
+                    backgroundColor: "#F0F0F0",
+                }
+                }
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end" style={{ paddingRight: "12px" }}>
+                            <SearchIcon fontSize="medium" />
+                        </InputAdornment>
+                    ),
+                    style: {
+                        "& .MuiOutlinedInput-notchedOutline": {
+                            borderWidth: "0",
+                        },
+                    },
+                }}
+            />
+            < div className="pl-5" >
+                <Button
+                    variant="contained"
+                    style={{
+                        backgroundColor: "black",
+                        borderRadius: "25px",
+                        height: "48px",
+                        width: "148px",
+                        marginLeft: "auto",
+                    }}
+                    onClick={handleAddClick}
+                    className="ml-auto"
+                >
+                    Add
+                </Button>
+            </div >
+        </div >
+    );
+};
+
+export default Read;
