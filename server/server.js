@@ -13,7 +13,7 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "mysql",
+    database: "system",
 });
 
 app.get("/", (req, res) => {
@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 app.post("/students", (req, res) => {
     const { first_name, last_name, location, email, dob, education, about } =
         req.body;
+    console.log(req.body)
     const sql =
         "INSERT INTO students (first_name, last_name, location, email, dob, education, about) VALUES (?, ?, ?, ?, ?, ?, ?)";
     db.query(
@@ -51,7 +52,7 @@ app.post("/students", (req, res) => {
 // Read the existing student for Updating the student
 app.get("/read/:id", (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM students WHERE student_id =?";
+    const sql = "SELECT * FROM students WHERE id =?";
     db.query(sql, [id], (err, result) => {
         if (err) {
             console.error("Error querying the database:", err);
@@ -61,10 +62,11 @@ app.get("/read/:id", (req, res) => {
     });
 });
 // UPDATE the existing student
-app.put("/update/:id", (req, res) => {
+app.put("/edit_user/:id", (req, res) => {
     const sql =
-        "UPDATE students SET `first_name` = ?, `last_name` = ?, `email` = ?, `location` = ?, `dob` = ?, `education` = ?, `about`= ? WHERE student_id = ?";
+        "UPDATE students SET `first_name` = ?, `last_name` = ?, `email` = ?, `location` = ?, `dob` = ?, `education` = ?, `about`= ? WHERE id = ?";
     const id = req.params.id;
+    console.log(id)
     const { first_name, last_name, location, email, dob, education, about } =
         req.body;
     db.query(
@@ -100,3 +102,24 @@ app.delete("/delete/:id", (req, res) => {
 app.listen(port, () => {
     console.log(`listening on port ${port} `);
 });
+
+
+// app.route("/edit_user").put((req, res) => {
+//     const sql =
+//         "UPDATE students SET `first_name` = ?, `last_name` = ?, `email` = ?, `location` = ?, `dob` = ?, `education` = ?, `about`= ? WHERE student_id = ?";
+//     const id = req.params.id;
+//     const { first_name, last_name, location, email, dob, education, about } =
+//         req.body;
+//     db.query(
+//         sql,
+//         [first_name, last_name, email, location, dob, education, about, id],
+//         (err, result) => {
+//             if (err) {
+//                 console.error("Error updating student:", err);
+//                 return res.status(500).json({ error: "Error updating student" });
+//             }
+//             console.log("Student updated:", result);
+//             return res.status(200).json({ message: "Student updated successfully" });
+//         }
+//     );
+
