@@ -134,7 +134,7 @@ function Edit() {
             ></textarea>
           </div>
           <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-dark mx-3">Save</button>
+            <button type="submit" className="btn btn-dark mx-3">Update</button>
           </div>
         </form>
       </div>

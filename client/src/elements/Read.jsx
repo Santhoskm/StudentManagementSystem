@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, InputAdornment, Button } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Button } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaExchangeAlt } from "react-icons/fa";
+import { Form, InputGroup } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
 
 const Read = () => {
     const navigate = useNavigate();
@@ -14,30 +14,17 @@ const Read = () => {
 
     return (
         <div className="container mt-4 d-flex justify-content-between align-items-center" style={{ marginBottom: "20px" }}>
-            < TextField
-                variant="outlined"
-                placeholder="Search"
-                style={{
-                    paddingLeft: "10px",
-                    width: "27%",
-                    height: "18%",
-                    borderRadius: "5px",
-                    backgroundColor: "#F0F0F0",
-                }
-                }
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end" style={{ paddingRight: "12px" }}>
-                            <SearchIcon fontSize="medium" />
-                        </InputAdornment>
-                    ),
-                    style: {
-                        "& .MuiOutlinedInput-notchedOutline": {
-                            borderWidth: "0",
-                        },
-                    },
-                }}
-            />
+            <div className="mb-3">
+                <InputGroup>
+                    <Form.Control
+                        placeholder="Search"
+                        aria-label="Search"
+                    />
+                    <Button variant="outline-secondary">
+                        <FaSearch />
+                    </Button>
+                </InputGroup>
+            </div>
             < div className="pl-5" >
                 <Button
                     variant="contained"
